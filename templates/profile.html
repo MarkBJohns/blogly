@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} {{user.name}} {% endblock %}
+
+{% block content %}
+
+<main>
+    <img src="{{user.image_url}}" alt="" class="profile_picture">
+    <h1>{{user.first_name}} {{user.last_name}}</h1>
+    <div>
+        <a href="/users/{{user.id}}/edit">
+            <button>Edit</button>
+        </a>
+        <button id="delete">Delete</button>
+    </div>
+</main>
+
+<script>
+    document.getElementById('delete').addEventListener('click', function(){
+        if(confirm('Are you sure you want to delete this url?')){
+            fetch('/users/{{user.id}}/delete', {method: 'POST'})
+            .then(()=> window.location.href = '/');
+        }
+    });
+</script>
+
+{% endblock %}
